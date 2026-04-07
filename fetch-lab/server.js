@@ -31,7 +31,48 @@ app.get("/api/greet/:name", (req, res) => {
 });
 
 //B.4
+app.get("/api/math", (req, res) => {
+  const a = Number(req.query.a);
+  const b = Number(req.query.b);
+  const operation = req.query.operation;
 
+  if (
+    operation == false ||
+    ["add", "subtract", "multiply", "divide"].includes(operation) == false
+  ) {
+    return res.status(400).json({
+      error:
+        "Invalid or missing operation. Use: add, subtract, multiply, divide",
+    });
+  }
+
+  if (operation == "divide" && b == 0) {
+    return res.status(400).json({
+      error: "Cannot divide by zero",
+    });
+  }
+});
+//define operations:
+let result;
+if (operation == "add") {
+  result = a + b;
+}
+if (operation == "subtract") {
+  result = a - b;
+}
+if (operation == "multiply") {
+  result = a * b;
+}
+if (operation == "divide") {
+  result = a / b;
+}
+
+res.json({
+  a,
+  b,
+  operation,
+  result,
+});
 
 // ---- Your endpoints go above this line ----
 
