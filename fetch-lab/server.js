@@ -78,6 +78,26 @@ app.get("/api/slow", (req, res) => {
   }, 3000);
 });
 
+//B.6
+app.get('/api/unreliable', (req, res) => {
+  const rand = Math.random();
+  if (rand < 0.5) {
+    res.status(500).json({
+      error: "Server had a bad day. Try again!"
+    });
+  } else {
+    res.json({
+      message: "Lucky! It worked this time.",
+      luckyNumber: Math.floor(Math.random() * 100)
+    });
+  }
+});
+
+//B.7
+
+
+
+
 // ---- Your endpoints go above this line ----
 
 const PORT = process.env.PORT || 3000; //using port 3000 because 8080 is being used for discuit
