@@ -36,9 +36,10 @@ app.get("/api/math", (req, res) => {
   const b = Number(req.query.b);
   const operation = req.query.operation;
 
+  // validation
   if (
-    operation == false ||
-    ["add", "subtract", "multiply", "divide"].includes(operation) == false
+    !operation ||
+    !["add", "subtract", "multiply", "divide"].includes(operation)
   ) {
     return res.status(400).json({
       error:
@@ -46,32 +47,37 @@ app.get("/api/math", (req, res) => {
     });
   }
 
-  if (operation == "divide" && b == 0) {
+  if (operation === "divide" && b === 0) {
     return res.status(400).json({
       error: "Cannot divide by zero",
     });
   }
-});
-//define operations:
-let result;
-if (operation == "add") {
-  result = a + b;
-}
-if (operation == "subtract") {
-  result = a - b;
-}
-if (operation == "multiply") {
-  result = a * b;
-}
-if (operation == "divide") {
-  result = a / b;
-}
 
-res.json({
-  a,
-  b,
-  operation,
-  result,
+  // define result INSIDE the route
+  let result;
+
+  if (operation === "add") result = a + b;
+  if (operation === "subtract") result = a - b;
+  if (operation === "multiply") result = a * b;
+  if (operation === "divide") result = a / b;
+
+  // send response
+  res.json({
+    a,
+    b,
+    operation,
+    result,
+  });
+});
+
+//B.5
+app.get("/api/slow", (req, res) => {
+  setTimeout(() => {
+    res.json({
+      message: "Sorry for the wait!",
+      delayMs: 3000,
+    });
+  }, 3000);
 });
 
 // ---- Your endpoints go above this line ----
