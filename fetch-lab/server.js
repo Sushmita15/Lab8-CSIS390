@@ -36,7 +36,6 @@ app.get("/api/math", (req, res) => {
   const b = Number(req.query.b);
   const operation = req.query.operation;
 
-  // validation
   if (
     !operation ||
     !["add", "subtract", "multiply", "divide"].includes(operation)
@@ -53,7 +52,6 @@ app.get("/api/math", (req, res) => {
     });
   }
 
-  // define result INSIDE the route
   let result;
 
   if (operation === "add") result = a + b;
@@ -61,7 +59,7 @@ app.get("/api/math", (req, res) => {
   if (operation === "multiply") result = a * b;
   if (operation === "divide") result = a / b;
 
-  // send response
+
   res.json({
     a,
     b,
